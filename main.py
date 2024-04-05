@@ -640,20 +640,18 @@ for mac_address in macadda['mac']:
              print(device)
              plcip = dcp.get_ip_address(mac_address)
              print(plcip)
-
-pNoList = open('PhoneNumber.json')
-data = json.load(pNoList)
-for PNo in data['PhoneNumbers']:
-     if(PNo != EODAJS):
-	     cOmmandString = "mmcli -m any --messaging-create-sms=\'number=" + PNo + "\'" + ",\'text=" + mac_address + "\'" + ">./sms.txt"
-	     os.system(cOmmandString)
-	     print(cOmmandString)
-	     
-smsfileR = open('./sms.txt','r') 
-check=""
-check = smsfileR.read()
-NoOFSMS = check.split("/", 10)
-cOmmandStringMessageSend = "mmcli -m any --send -s" + NoOFSMS[5]
-os.system(cOmmandStringMessageSend)
-print(cOmmandStringMessageSend)
+             pNoList = open('PhoneNumber.json')
+             data = json.load(pNoList)
+             for PNo in data['PhoneNumbers']:
+                 if(PNo != EODAJS):
+                          cOmmandString = "mmcli -m any --messaging-create-sms=\'number=" + PNo + "\'" + ",\'text=" + mac_address + "\'" + ">./sms.txt"
+                          os.system(cOmmandString)
+                          print(cOmmandString)
+                          smsfileR = open('./sms.txt','r') 
+                          check=""
+                          check = smsfileR.read()
+                          NoOFSMS = check.split("/", 10)
+                          cOmmandStringMessageSend = "mmcli -m any --send -s "+ NoOFSMS[5]
+                          os.system(cOmmandStringMessageSend)
+                          print(cOmmandStringMessageSend)
 
