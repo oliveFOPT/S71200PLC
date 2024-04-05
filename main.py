@@ -638,20 +638,37 @@ for mac_address in macadda['mac']:
              dcp.blink(mac_address)
              device = dcp.identify(mac_address)
              print(device)
+             checkstringtodev = str(device)
              plcip = dcp.get_ip_address(mac_address)
              print(plcip)
              pNoList = open('PhoneNumber.json')
              data = json.load(pNoList)
+             strsplit3=checkstringtodev.split("=", 200)
+             strsplit35=strsplit3[0].split(",", 200)
+             strsplit351=strsplit3[1].split(",", 200)
+             strsplit352=strsplit3[2].split(",", 200)
+             strsplit353=strsplit3[3].split(",", 200)
+             #print(strsplit35[0])
+             #print(strsplit35[1])
+             #print(strsplit351[0])
+             #print(strsplit351[1])
+             #print(strsplit352[0])
+             #print(strsplit352[1])
+             #print(strsplit353[0])
              for PNo in data['PhoneNumbers']:
                  if(PNo != EODAJS):
-                          cOmmandString = "mmcli -m any --messaging-create-sms=\'number=" + PNo + "\'" + ",\'text=" + mac_address + "\'" + ">./sms.txt"
+                          cOmmandString = "mmcli -m any --messaging-create-sms=\'number=" + PNo + "\'" + ",\'text=" + strsplit351[0] + strsplit352[0] + strsplit353[0]  + "\'" + ">./sms.txt"
                           os.system(cOmmandString)
                           print(cOmmandString)
                           smsfileR = open('./sms.txt','r') 
                           check=""
                           check = smsfileR.read()
-                          NoOFSMS = check.split("/", 10)
+                          NoOFSMS = check.split("/", 200)
                           cOmmandStringMessageSend = "mmcli -m any --send -s "+ NoOFSMS[5]
                           os.system(cOmmandStringMessageSend)
                           print(cOmmandStringMessageSend)
+                          smsfileR.close()
+                          #os.system('rm -rf ./sms.txt')
+                          #smsfileR = open('./sms.txt','w')
+                          #smsfileR.close()
 
